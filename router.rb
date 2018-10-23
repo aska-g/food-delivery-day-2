@@ -41,9 +41,9 @@ class Router
     when 2 then @meals_controller.add
     when 3 then @customers_controller.list
     when 4 then @customers_controller.add
-    when 5 then @current_user = nil
 
-    when 6 then stop
+    when 8 then @current_user = nil
+    when 9 then stop
     else
       puts "Please press 1, 2, 3 or 4"
     end
@@ -53,7 +53,9 @@ class Router
     case action
     when 1 then # TODO
     when 2 then #TODO
-    when 6 then stop
+
+    when 8 then @current_user = nil
+    when 9 then stop
     else
       puts "Please press 1, 2, 6"
     end
@@ -72,9 +74,8 @@ class Router
     puts "3 - List all customers"
     puts "4 - Add a new customer"
 
-    puts "5 - Log out"
-
-    puts "6 - Stop and exit the program"
+    puts "8 - Log out"
+    puts "9 - Stop and exit the program"
   end
 
   def display_delivery_guy_tasks
@@ -82,6 +83,7 @@ class Router
     puts "What do you want to do next?"
     puts "1 - List my orders"
     puts "2 - Mark order as delivered"
-    puts "6 - Stop and exit the program"
+    puts "8 - Log out"
+    puts "9 - Stop and exit the program"
   end
 end
