@@ -11,6 +11,18 @@ class View
     end
   end
 
+  def display_orders(orders)
+    orders.each do |order|
+      puts "#{order.id}. Meal: #{order.meal.name} - Customer: #{order.customer.name} - Employee: #{order.employee.username}"
+    end
+  end
+
+  def display_employees(employees)
+    employees.each do |employee|
+      puts "#{employee.id}. #{employee.username}"
+    end
+  end
+
   def ask_for(something)
     puts "#{something}?"
     return gets.chomp
