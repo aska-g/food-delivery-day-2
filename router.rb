@@ -1,8 +1,9 @@
 # TODO: implement the router of your app.
 class Router
-  def initialize(meals_controller, customers_controller)
+  def initialize(meals_controller, customers_controller, sessions_controller)
     @meals_controller = meals_controller
     @customers_controller = customers_controller
+    @sessions_controller = sessions_controller
     @running    = true
   end
 
@@ -11,21 +12,36 @@ class Router
     puts "           --           "
 
     while @running
-      display_tasks
-      action = gets.chomp.to_i
-      print `clear`
-      route_action(action)
+      @current_user = @sessions_controller.login
+
+      while @current_user
+        if @current_user.manager?
+          display_manager_tasks
+        else
+          display_delivery_guy_tasks
+        end
+
+        action = gets.chomp.to_i
+        print `clear`
+
+        if @current_user.manager?
+          route_manager_action(action)
+        else
+          route_delivery_guy_action(action)
+        end
+      end
     end
   end
 
   private
 
-  def route_action(action)
+  def route_manager_action(action)
     case action
     when 1 then @meals_controller.list
     when 2 then @meals_controller.add
     when 3 then @customers_controller.list
     when 4 then @customers_controller.add
+    when 5 then @current_user = nil
 
     when 6 then stop
     else
@@ -33,11 +49,22 @@ class Router
     end
   end
 
+  def route_delivery_guy_action(action)
+    case action
+    when 1 then # TODO
+    when 2 then #TODO
+    when 6 then stop
+    else
+      puts "Please press 1, 2, 6"
+    end
+  end
+
   def stop
+    @current_user = nil
     @running = false
   end
 
-  def display_tasks
+  def display_manager_tasks
     puts ""
     puts "What do you want to do next?"
     puts "1 - List all meals"
@@ -45,6 +72,16 @@ class Router
     puts "3 - List all customers"
     puts "4 - Add a new customer"
 
+    puts "5 - Log out"
+
+    puts "6 - Stop and exit the program"
+  end
+
+  def display_delivery_guy_tasks
+    puts ""
+    puts "What do you want to do next?"
+    puts "1 - List my orders"
+    puts "2 - Mark order as delivered"
     puts "6 - Stop and exit the program"
   end
 end

@@ -15,4 +15,12 @@ class View
     puts "#{something}?"
     return gets.chomp
   end
+
+  def welcome(employee)
+    puts "Welcome, #{employee.username}"
+  end
+
+  def wrong_credentials
+    puts "Wrong credentials, try again!"
+  end
 end
