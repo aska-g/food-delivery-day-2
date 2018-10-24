@@ -54,8 +54,8 @@ class Router
 
   def route_delivery_guy_action(action)
     case action
-    when 1 then @orders_controller.my_undelivered_orders
-    when 2 then @orders_controller.mark_as_delivered
+    when 1 then @orders_controller.my_undelivered_orders(@current_user)
+    when 2 then @orders_controller.mark_as_delivered(@current_user)
 
     when 8 then @current_user = nil
     when 9 then stop
@@ -86,7 +86,7 @@ class Router
   def display_delivery_guy_tasks
     puts ""
     puts "What do you want to do next?"
-    puts "1 - List my orders"
+    puts "1 - List my undelivered orders"
     puts "2 - Mark order as delivered"
     puts "8 - Log out"
     puts "9 - Stop and exit the program"

@@ -30,14 +30,18 @@ class OrdersController
     @order_repository.add(order)
   end
 
-  def my_undelivered_orders
-    # TODO
-
+  def my_undelivered_orders(employee)
+    orders = @order_repository.undelivered_orders.select { |order| order.employee == employee }
+    @view.display_orders(orders)
   end
 
-  def mark_as_delivered
-    # TODO
-
+  def mark_as_delivered(employee)
+    orders = @order_repository.undelivered_orders.select { |order| order.employee == employee }
+    @view.display_orders(orders)
+    order_id = @view.ask_for(:order).to_i
+    order = orders.find { |o| order_id == o.id }
+    order.deliver!
+    @order_repository.save
   end
 
   private
@@ -57,7 +61,7 @@ class OrdersController
   end
 
   def ask_for_employee
-    employees = @employee_repository.all
+    employees = @employee_repository.delivery_guys
     @view.display_employees(employees)
     employee_id = @view.ask_for('which number').to_i # => integer
     @employee_repository.find(employee_id)

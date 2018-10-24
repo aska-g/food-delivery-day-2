@@ -29,6 +29,10 @@ class OrderRepository
     @orders.find { |order| order.id == id }
   end
 
+  def save
+    save_csv
+  end
+
   private
 
   def load_csv

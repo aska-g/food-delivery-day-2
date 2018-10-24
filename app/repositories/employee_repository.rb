@@ -26,6 +26,10 @@ class EmployeeRepository
     @employees
   end
 
+  def delivery_guys
+    @employees.reject { |employee| employee.manager? }
+  end
+
   private
 
   def load_csv
